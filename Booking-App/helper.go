@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"net/smtp"
 	"regexp"
+	"time"
 )
 
 func ValidateUserInput(firstName string, lastName string, email string, userTickets uint) (bool, bool, bool) {
@@ -37,9 +37,14 @@ func SendTicket(firstName string, lastName string, email string, userTickets uin
 
 	message := []byte(subject + body)
 
-	auth := smtp.PlainAuth("", from, password, host)
-	err := smtp.SendMail(address, auth, from, to, message)
-	if err != nil {
-		panic(err)
+	config := mail.MailerConfig{
+		Host: host,
+		Port: port,
+		Username: from,
+		Password: password,
+		Timeout: 5 * time.Second,
+		Sender: "Go Conference"
 	}
+
+
 }
