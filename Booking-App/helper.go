@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"regexp"
 	"time"
 )
@@ -25,26 +25,32 @@ func SendTicket(firstName string, lastName string, email string, userTickets uin
 	from := "AKIA47F3KO7RYQVZBU2H"
 	password := "BOHwds3TD4bh90PX/6PCMRi68qiR3odxyFtKZsNe8xle"
 
-	toEmailAddress := email
-	to := []string{toEmailAddress}
+	//toEmailAddress := email
+	//to := []string{toEmailAddress}
 
 	host := "email-smtp.us-east-1.amazonaws.com"
 	port := "587"
-	address := host + ":" + port
+	//address := host + ":" + port
 
-	subject := fmt.Sprintf("Subject: %v tickets for %v %v\n", userTickets, firstName, lastName)
-	body := fmt.Sprintf("Thank you %v for your purchase. This is a list of your ticket ID(s): \n %v", firstName, ticketId)
+	//subject := fmt.Sprintf("Subject: %v tickets for %v %v\n", userTickets, firstName, lastName)
+	//body := fmt.Sprintf("Thank you %v for your purchase. This is a list of your ticket ID(s): \n %v", firstName, ticketId)
 
-	message := []byte(subject + body)
+	//message := []byte(subject + body)
 
 	config := mail.MailerConfig{
-		Host: host,
-		Port: port,
+		Host:     host,
+		Port:     port,
 		Username: from,
 		Password: password,
-		Timeout: 5 * time.Second,
-		Sender: "Go Conference"
+		Timeout:  5 * time.Second,
+		Sender:   "Go Conference",
 	}
 
+	sender := mailer.New(config)
+
+	err = sender.Send(email, "go_conference.html", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
