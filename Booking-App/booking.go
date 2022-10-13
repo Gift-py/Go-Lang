@@ -101,7 +101,7 @@ func bookTicket(firstName string, lastName string, email string, userTickets uin
 	fmt.Printf("List of booking %v\n:", bookings)
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
-	fmt.Printf("%v tickets remaining for the Go Confrernce \n", remainingTickets)
+	fmt.Printf("%v tickets remaining for the Go Conference \n", remainingTickets)
 }
 
 func getFirstName() []string {
