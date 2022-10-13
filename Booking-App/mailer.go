@@ -22,7 +22,7 @@ type MailerConfig struct {
 }
 
 type Mailer struct {
-	dailer *mail.Dailer
+	dailer *mail.Dialer
 	config MailerConfig
 	sender string
 }
@@ -38,7 +38,7 @@ func New(config MailerConfig) Mailer {
 	}
 }
 
-func (m Mailer) Send(to, message string, data interface{}) error {
+func (m Mailer) Send(to, templateFile string, data interface{}) error {
 	if m.config.TemplatePath == "" {
 		m.config.TemplatePath = "templates/"
 	}
@@ -50,6 +50,12 @@ func (m Mailer) Send(to, message string, data interface{}) error {
 
 	subject := new(bytes.Buffer)
 	err = tmpl.ExecuteTemplate(subject, "subject", data)
+	if err != nil {
+		return err
+	}
+
+	plainBody := new(bytes.Buffer)
+	err = tmpl.ExecuteTemplate(plainBody, "plainBody", data)
 	if err != nil {
 		return err
 	}

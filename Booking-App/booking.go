@@ -4,15 +4,6 @@ import (
 	"fmt"
 )
 
-/*
-	To create a ticketing app
-	- welcome screen
-	- show amount of available ticket
-	- collect userInput
-	- save bookings (name, email, amount-of-tiickets)
-	- send ticket id (multithreading)
-
-*/
 const conferenceTickets = 50
 
 var remainingTickets uint = 50     //uint datatype does not accept negetive values
