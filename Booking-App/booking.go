@@ -33,8 +33,8 @@ func main() {
 	isValidName, isValidEmail, isValidTicketNumber := ValidateUserInput(firstName, lastName, email, userTickets)
 
 	if isValidName && isValidEmail && isValidTicketNumber {
-		bookTicket(firstName, lastName, email, userTickets)
-		SendTicket(firstName, lastName, email, userTickets)
+		var userData = bookTicket(firstName, lastName, email, userTickets)
+		SendTicket(firstName, lastName, email, userTickets, userData)
 
 		firstNames := getFirstName()
 		fmt.Printf("The names of the bookings are %v\n", firstNames)
@@ -64,23 +64,23 @@ func getUserData() (string, string, string, uint) {
 	var email string
 	var userTickets uint
 
-	fmt.Println("Enter your first name -> ")
+	fmt.Print("Enter your first name -> ")
 	fmt.Scan(&firstName)
 
-	fmt.Println("Enter your last name -> ")
+	fmt.Print("Enter your last name -> ")
 	fmt.Scan(&lastName)
 
-	fmt.Println("Enter your email -> ")
+	fmt.Print("Enter your email -> ")
 	fmt.Scan(&email)
 
-	fmt.Println("Enter number of tickets to purchase -> ")
+	fmt.Print("Enter number of tickets to purchase -> ")
 	fmt.Scan(&userTickets)
 
 	return firstName, lastName, email, userTickets
 
 }
 
-func bookTicket(firstName string, lastName string, email string, userTickets uint) {
+func bookTicket(firstName string, lastName string, email string, userTickets uint) UserData {
 	remainingTickets = remainingTickets - userTickets
 	var userData = UserData{
 		firstName:       firstName,
@@ -89,10 +89,12 @@ func bookTicket(firstName string, lastName string, email string, userTickets uin
 		numberOfTickets: userTickets,
 	}
 	bookings = append(bookings, userData)
-	fmt.Printf("List of booking %v\n:", bookings)
+	fmt.Printf("List of booking %v:\n", bookings)
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets remaining for the Go Conference \n", remainingTickets)
+
+	return userData
 }
 
 func getFirstName() []string {

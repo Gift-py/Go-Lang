@@ -1,15 +1,13 @@
 package main
 
 import (
+	"log"
 	"bytes"
-	"embed"
-	"text/template"
+	"html/template"
 	"time"
 
 	"github.com/go-mail/mail/v2"
 )
-
-var templateFS embed.FS
 
 type MailerConfig struct {
 	Timeout      time.Duration
@@ -22,56 +20,42 @@ type MailerConfig struct {
 }
 
 type Mailer struct {
-	dailer *mail.Dialer
+	dialer *mail.Dialer
 	config MailerConfig
 	sender string
 }
 
 func New(config MailerConfig) Mailer {
-	dailer := mail.NewDialer(config.Host, config.Port, config.Username, config.Password)
-	dailer.Timeout = config.Timeout
+	dialer := mail.NewDialer(config.Host, config.Port, config.Username, config.Password)
+	dialer.Timeout = config.Timeout
 
 	return Mailer{
-		dailer: dailer,
+		dialer: dialer,
 		sender: config.Sender,
 		config: config,
 	}
 }
 
 func (m Mailer) Send(to, templateFile string, data interface{}) error {
-	if m.config.TemplatePath == "" {
-		m.config.TemplatePath = "templates/"
+	t := template.New("go_conference.html")	
+	var err error
+
+	t, err = t.ParseFiles(templateFile)
+	if err != nil{
+		log.Println(err)
 	}
 
-	tmpl, err := template.New("email").ParseFS(templateFS, m.config.TemplatePath+templateFile)
-	if err != nil {
-		return err
+	var tpl bytes.Buffer
+	if err := t.Execute(&tpl, data); err != nil{
+		log.Println(err)
 	}
 
-	subject := new(bytes.Buffer)
-	err = tmpl.ExecuteTemplate(subject, "subject", data)
-	if err != nil {
-		return err
-	}
-
-	plainBody := new(bytes.Buffer)
-	err = tmpl.ExecuteTemplate(plainBody, "plainBody", data)
-	if err != nil {
-		return err
-	}
-
-	htmlBody := new(bytes.Buffer)
-	err = tmpl.ExecuteTemplate(htmlBody, "htmlBody", data)
-	if err != nil {
-		return err
-	}
-
+	result := tpl.String()
 	msg := mail.NewMessage()
+	msg.SetHeader("From", "giftabumere247@gmail.com")
 	msg.SetHeader("To", to)
-	msg.SetHeader("Subject", subject.String())
-	msg.SetHeader("From", m.sender)
-	msg.SetBody("text/plain", plainBody.String())
-	msg.AddAlternative("text/html", htmlBody.String())
+	msg.SetHeader("Subject", "Go-Conference")
+	msg.SetBody("text/html", result)
 
-	return m.dailer.DialAndSend(msg)
+	return m.dialer.DialAndSend(msg)
 }

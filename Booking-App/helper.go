@@ -15,7 +15,9 @@ func ValidateUserInput(firstName string, lastName string, email string, userTick
 
 }
 
-func SendTicket(firstName string, lastName string, email string, userTickets uint) {
+func SendTicket(firstName string, lastName string, email string, userTickets uint, userData UserData) {
+	
+
 	//to generate ticket IDs
 	var ticketId = make([]int, 0)
 	for idx := 0; idx <= int(userTickets); idx++ {
@@ -38,11 +40,12 @@ func SendTicket(firstName string, lastName string, email string, userTickets uin
 		Password: password,
 		Timeout:  5 * time.Second,
 		Sender:   "Go Conference",
+		TemplatePath: "templates/",
 	}
 
 	sender := New(config)
 
-	err := sender.Send(email, "go_conference.html", nil)
+	err := sender.Send(email, "templates/go_conference.html", userData)
 	if err != nil {
 		log.Fatal(err)
 	}
