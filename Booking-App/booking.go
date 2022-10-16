@@ -6,12 +6,9 @@ import (
 
 const conferenceTickets = 50
 
-var remainingTickets uint = 50     //uint datatype does not accept negetive values
-var bookings = make([]UserData, 0) //a list of the bookings
-//the "make" keyword creates a list whose data type is the "UserData" type.
-//The 0 is the present length of the list... It is dynamic
+var remainingTickets uint = 50
+var bookings = make([]UserData, 0)
 
-//this is a custom data structure (almost like a dictionary)
 type UserData struct {
 	firstName       string
 	lastName        string
@@ -98,7 +95,7 @@ func bookTicket(firstName string, lastName string, email string, userTickets uin
 }
 
 func getFirstName() []string {
-	firstNames := []string{} //a list of strings
+	firstNames := []string{}
 	for _, booking := range bookings {
 		firstNames = append(firstNames, booking.firstName)
 	}

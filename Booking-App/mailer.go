@@ -1,9 +1,9 @@
 package main
 
 import (
-	"log"
 	"bytes"
 	"html/template"
+	"log"
 	"time"
 
 	"github.com/go-mail/mail/v2"
@@ -37,16 +37,16 @@ func New(config MailerConfig) Mailer {
 }
 
 func (m Mailer) Send(to, templateFile string, data interface{}) error {
-	t := template.New("go_conference.html")	
+	t := template.New("go_conference.html")
 	var err error
 
 	t, err = t.ParseFiles(templateFile)
-	if err != nil{
+	if err != nil {
 		log.Println(err)
 	}
 
 	var tpl bytes.Buffer
-	if err := t.Execute(&tpl, data); err != nil{
+	if err := t.Execute(&tpl, data); err != nil {
 		log.Println(err)
 	}
 
