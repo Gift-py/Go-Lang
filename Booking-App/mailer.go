@@ -51,6 +51,7 @@ func (m Mailer) Send(to, templateFile string, data interface{}) error {
 	}
 
 	result := tpl.String()
+
 	msg := mail.NewMessage()
 	msg.SetHeader("From", "giftabumere247@gmail.com")
 	msg.SetHeader("To", to)

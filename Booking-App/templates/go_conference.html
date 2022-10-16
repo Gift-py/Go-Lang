@@ -1,48 +1,28 @@
-{{define "subject"}} Welcome to our site {{end}}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
 
+</head>
 
-{{define "plainBody"}} 
-Plain body of the email
-Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-
-Eaque deserunt a itaque. Eos tenetur ipsum aperiam dignissimos, 
-
-totam dolorem sed tempore 
-quis, quidem rerum atque esse perspiciatis magni temporibus voluptatibus?
-{{end}}
-
-
-
-
-{{define "htmlBody"}} 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+<body>
     <style>
-        .container{
-            max-width: 700px;
-            padding: 20px;
-            border: solid #CCC 1px;
+        .tab1 {
+            tab-size: 10;
         }
     </style>
-</head>
-<body>
+  <p>
+    Hello <strong>{{.FirstName}}</strong>. <br>
+    You just purchased <strong>{{.NumberOfTickets}}</strong> Ticket(s).
+    <br>
+    <br>
+    Will be expecting you at the Go-Conference :)
+    <br>
+    <br>
+    Be well! 
+    <br>    
+  </p>
+  <pre>&emsp; &emsp; Gift (go-team leader)</pre>
 
-    <div class="container">
-    <h2> HTML body of the email</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-</p>
-<p>Eaque deserunt a itaque. Eos tenetur ipsum aperiam dignissimos, 
-</p>
-<p>totam dolorem sed tempore 
-    quis, quidem rerum atque esse perspiciatis magni temporibus voluptatibus?</p>
-    </div>
-    
 </body>
-</html>
-{{end}}
 
+</html>

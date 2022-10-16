@@ -10,10 +10,10 @@ var remainingTickets uint = 50
 var bookings = make([]UserData, 0)
 
 type UserData struct {
-	firstName       string
-	lastName        string
-	email           string
-	numberOfTickets uint
+	FirstName       string
+	LastName        string
+	Email           string
+	NumberOfTickets uint
 }
 
 func main() {
@@ -80,10 +80,10 @@ func getUserData() (string, string, string, uint) {
 func bookTicket(firstName string, lastName string, email string, userTickets uint) UserData {
 	remainingTickets = remainingTickets - userTickets
 	var userData = UserData{
-		firstName:       firstName,
-		lastName:        lastName,
-		email:           email,
-		numberOfTickets: userTickets,
+		FirstName:       firstName,
+		LastName:        lastName,
+		Email:           email,
+		NumberOfTickets: userTickets,
 	}
 	bookings = append(bookings, userData)
 	fmt.Printf("List of booking %v:\n", bookings)
@@ -97,7 +97,7 @@ func bookTicket(firstName string, lastName string, email string, userTickets uin
 func getFirstName() []string {
 	firstNames := []string{}
 	for _, booking := range bookings {
-		firstNames = append(firstNames, booking.firstName)
+		firstNames = append(firstNames, booking.FirstName)
 	}
 	return firstNames
 }
